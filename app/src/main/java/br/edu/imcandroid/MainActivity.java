@@ -4,12 +4,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
 
     private EditText editTextAltura;
     private EditText editTextPeso;
     private EditText editTextResultado;
+    private ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
         editTextAltura = (EditText) findViewById(R.id.editTextAltura);
         editTextPeso = (EditText) findViewById(R.id.editTextPeso);
         editTextResultado = (EditText) findViewById(R.id.editTextResultado);
+        imageView = (ImageView) findViewById(R.id.imageView);
     }
 
     public void calcularImc (View v){
@@ -33,8 +36,20 @@ public class MainActivity extends AppCompatActivity {
         // PROCESSAMENTO
         double imc = peso / (altura * altura);
 
+        String mensagem;
+        if(imc < 18){
+            mensagem = "Você está muito magro.";
+            imageView.setImageResource(R.drawable.magro);
+        }else if(imc >= 18 && imc <= 25){
+            mensagem = "Você está sarado.";
+            imageView.setImageResource(R.drawable.sarado);
+        }else{
+            mensagem = "Você está muito gordo.";
+            imageView.setImageResource(R.drawable.gordo);
+        }
+
         // SAIDA
-        editTextResultado.setText(imc+"");
+        editTextResultado.setText(imc+"\n"+mensagem);
     }
 }
 
